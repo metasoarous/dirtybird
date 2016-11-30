@@ -2,8 +2,8 @@
 
 
 (def blank-board
-  {:hits []
-   :pieces []})
+  {:hits #{}
+   :pieces #{}})
 
 (def blank-player
   {:board blank-board

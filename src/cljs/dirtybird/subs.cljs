@@ -25,7 +25,10 @@
 (re-frame/reg-sub
   :cell-status
   (fn [db [_ i j]]
-    (let [phase @(re-frame/subscribe [:phase])]
+    (let [phase @(re-frame/subscribe [:phase])
+          ;; TODO : if playing need to get the _other_ players board
+          player-board (get db (:turn db))]
       (case phase
-        :placing :TODO2
-        :playing :TODO1))))
+        :placing (when (get-in player-board [:pieces [i j]]) :placed)
+        ;; TODO Need to handle hit and hit-miss
+        :playing (if (get-in player-board [:pieces [i j] :placed]))))))
