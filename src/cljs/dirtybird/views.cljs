@@ -14,6 +14,7 @@
    [:h3 "Place a piece (length "
     @(re-frame/subscribe [:next-placement-length]) ")"]])
 
+
 (defn controls
   []
   [:div
@@ -38,7 +39,9 @@
                                        :hit "red"
                                        "lightgrey")
                    :width "76px"
-                   :height "76px"}}]))
+                   :height "76px"}
+           :on-click (fn [_] (re-frame/dispatch [:click-cell i j]))}]))
+
 
 (defn board []
   [:div {:style {:width "800px"
@@ -47,6 +50,7 @@
    (for [i (range 10)
          j (range 10)]
      [tile i j])])
+
 
 (defn main-panel []
   [:div

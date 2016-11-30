@@ -6,3 +6,8 @@
  :initialize-db
  (fn  [_ _]
    db/default-db))
+
+(re-frame/reg-event-db
+  :click-cell
+  (fn [db [_ i j]]
+    (js/console.log (str "click: " i " & " j))))

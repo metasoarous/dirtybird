@@ -23,6 +23,16 @@
     (first (get-in db [(:turn db) :pending-placements]))))
 
 (re-frame/reg-sub
+  :current-board
+  (fn [db]
+    (let [phase @(re-frame/subscribe [:phase])
+          turn @(re-frame/subscribe [:turn])
+          player (case phase
+                   :placing turn
+                   :playing ({:player-a :player-b, :player-b :player-a} turn))]
+      (get-in db [player :board]))))
+
+(re-frame/reg-sub
   :cell-status
   (fn [db [_ i j]]
     (let [phase @(re-frame/subscribe [:phase])
@@ -31,4 +41,4 @@
       (case phase
         :placing (when (get-in player-board [:pieces [i j]]) :placed)
         ;; TODO Need to handle hit and hit-miss
-        :playing (if (get-in player-board [:pieces [i j] :placed]))))))
+        :playing (if (get-in player-board [:pieces [i j]]) :placed)))))
