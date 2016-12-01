@@ -44,12 +44,14 @@
 
 
 (defn board []
-  [:div {:style {:width "800px"
-                 :display "flex"
-                 :flex-wrap "wrap"}}
-   (for [i (range 10)
-         j (range 10)]
-     [tile i j])])
+  (let [board-size 10]
+    [:div {:style {:width "800px"
+                   :display "flex"
+                   :flex-wrap "wrap"}}
+     (for [i (range board-size)
+           j (range board-size)]
+       ^{:key (+ (* i board-size) j)}
+       [tile i j])]))
 
 
 (defn main-panel []
